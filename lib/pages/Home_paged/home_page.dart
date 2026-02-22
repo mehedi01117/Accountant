@@ -232,12 +232,15 @@ class _HomePageState extends State<HomePage> {
               // সামারি কার্ড
               Container(
                 padding: EdgeInsets.all(20),
-                color: Colors.teal.shade50,
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    summaryCard("দেবো/জমা", "৳ $totalIn", Colors.green),
-                    summaryCard("পাবো/খরচ", "৳ $totalOut", Colors.red),
+                    summaryCard("মোট দেবো", "৳ $totalIn", Colors.green),
+                    summaryCard("মোট পাবো", "৳ $totalOut", Colors.red),
                   ],
                 ),
               ),
@@ -245,7 +248,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  "সাম্প্রতিক লেনদেন",
+                  "কাস্টমার লিস্ট",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -259,56 +262,83 @@ class _HomePageState extends State<HomePage> {
                           itemCount: transactions.length,
                           itemBuilder: (context, index) {
                             final item = transactions[index];
-                            return ListTile(
-                              leading: CircleAvatar(
-                                backgroundColor:
-                                    item.isCradit
-                                        ? Colors.green.shade100
-                                        : Colors.red.shade100,
-                                backgroundImage:
-                                    item.image != null
-                                        ? MemoryImage(item.image!)
-                                        : null, // ইমেজ থাকলে দেখাবে
-                                child:
-                                    item.image == null
-                                        ? Icon(
-                                          item.isCradit
-                                              ? Icons.arrow_downward
-                                              : Icons.arrow_upward,
-                                          color:
-                                              item.isCradit
-                                                  ? Colors.green
-                                                  : Colors.red,
-                                        )
-                                        : null,
+                            return Card(
+                              elevation: 5,
+                              shadowColor: Colors.blue,
+                              color: Colors.teal.shade50,
+                              margin: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 15,
                               ),
-                              title: Text(item.title),
-
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "পণ্য: ${item.productname}",
-                                  ), // পণ্যের নাম
-                                  Text("ফোন: ${item.phonenumber}"), // ফোন নম্বর
-                                  Text(
-                                    "${item.date.day}/${item.date.month}/${item.date.year}",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              trailing: Text(
-                                "৳ ${item.amount}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      item.isCradit ? Colors.green : Colors.red,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: BorderSide(
+                                  color: Color.fromARGB(99, 33, 149, 243),
+                                  width: 1,
                                 ),
                               ),
-                              onLongPress: () {}, // চেপে ধরলে ডিলিট হবে
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 30,
+                                      backgroundColor:
+                                          item.isCradit
+                                              ? Colors.green
+                                              : Colors.red,
+                                      backgroundImage:
+                                          item.image != null
+                                              ? MemoryImage(item.image!)
+                                              : null,
+                                      child:
+                                          item.image == null
+                                              ? Icon(
+                                                item.isCradit
+                                                    ? Icons
+                                                        .arrow_upward_outlined
+                                                    : Icons
+                                                        .arrow_downward_outlined,
+                                                size: 30,
+                                              )
+                                              : null,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Name: ${item.title}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            "${item.date.day}-${item.date.month}-${item.date.year}",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      "Price ${item.amount}",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color:
+                                            item.isCradit
+                                                ? Colors.green
+                                                : Colors.red,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             );
                           },
                         ),
@@ -327,9 +357,35 @@ class _HomePageState extends State<HomePage> {
 
   Widget summaryCard(var title, var amount, Color color) {
     return Card(
+      elevation: 10,
+      shadowColor: Colors.blue,
       child: Container(
         padding: EdgeInsets.all(30),
-        child: Column(children: [Text(title), Text(amount)]),
+
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(125, 255, 193, 7),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+            Text(
+              amount,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

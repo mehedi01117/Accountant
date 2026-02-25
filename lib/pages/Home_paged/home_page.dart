@@ -267,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                             final item = transactions[index];
                             return GestureDetector(
                               onTap: () {
-                                Get.offAll(() =>UserPages());
+                                Get.offAll(() =>UserPages(transaction: item,));
                               },
                               child: Card(
                                 elevation: 5,

@@ -40,9 +40,20 @@ class _UserPagesState extends State<UserPages> {
             ),
             CircleAvatar(
               radius: 18,
+              backgroundColor: data.isCradit ? Colors.green : Colors.red,
               backgroundImage:
                   data.image != null ? MemoryImage(data.image!) : null,
-              child: data.image == null ? const Icon(Icons.person) : null,
+              child:
+                  data.image == null
+                      ? Text(
+                        data.title.isNotEmpty ? data.title[0] : "?",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                      : null,
             ),
             SizedBox(width: 10),
             Text(
@@ -55,7 +66,7 @@ class _UserPagesState extends State<UserPages> {
       body: Column(
         children: [
           Container(
-            color: const Color.fromARGB(181, 114, 230, 5),
+            color: data.isCradit ? Colors.green : Colors.red,
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
               children: [
@@ -92,7 +103,7 @@ class _UserPagesState extends State<UserPages> {
                 ),
                 Expanded(
                   child: Text(
-                    data.phonenumber.toString(),
+                    "+880${data.phonenumber.toString()}",
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -124,12 +135,13 @@ class _UserPagesState extends State<UserPages> {
               style: TextStyle(color: Colors.black, fontSize: 16),
             ),
             actions: [
-              TextButton(
-                onPressed: () {},
+              ElevatedButton(
+                onPressed: () => Get.back(),
                 child: Text("না", style: TextStyle(color: Colors.grey)),
               ),
               ElevatedButton(
                 onPressed: () async {
+                  await data.delete();
                   Get.back();
                   Get.back();
 

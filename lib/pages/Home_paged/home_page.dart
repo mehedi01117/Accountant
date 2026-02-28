@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(color: Colors.black, fontSize: 16),
                   ),
                 ),
-
+                
                 content: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 13),
                       TextField(
                         controller: phoneController,
                         decoration: InputDecoration(
@@ -267,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                             final item = transactions[index];
                             return GestureDetector(
                               onTap: () {
-                                Get.offAll(() =>UserPages(transaction: item,));
+                                Get.offAll(() => UserPages(transaction: item));
                               },
                               child: Card(
                                 elevation: 5,
@@ -300,13 +300,16 @@ class _HomePageState extends State<HomePage> {
                                                 : null,
                                         child:
                                             item.image == null
-                                                ? Icon(
-                                                  item.isCradit
-                                                      ? Icons
-                                                          .arrow_upward_outlined
-                                                      : Icons
-                                                          .arrow_downward_outlined,
-                                                  size: 30,
+                                                ? Text(
+                                                  item.title.isNotEmpty
+                                                      ? item.title[0]
+                                                          .toUpperCase()
+                                                      : '?',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 )
                                                 : null,
                                       ),

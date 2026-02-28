@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:hive/hive.dart';
 
-class Transaction {
+class Transaction extends HiveObject {
   final String title;
   final String productname;
   final int phonenumber;

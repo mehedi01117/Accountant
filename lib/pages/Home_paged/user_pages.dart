@@ -41,7 +41,9 @@ class _UserPagesState extends State<UserPages> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  updateTransaction(context, data);
+                },
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   minimumSize: Size.zero,
@@ -233,4 +235,44 @@ class _UserPagesState extends State<UserPages> {
           ),
     );
   }
+
+  void updateTransaction(BuildContext context, Transaction data) {
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Center(
+              child: Text(
+                "লেনদেনটি কি পরিবর্তন করতে চান?",
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+            ),
+
+            content: Text(
+              "${data.title} এর এই লেনদেনটি কি পরিবর্তন করতে চান?",
+              style: TextStyle(color: Colors.black, fontSize: 16),
+            ),
+            actions: [
+              TextField(
+                controller: amountController,
+                decoration: InputDecoration(
+                  labelText: "${data.amount}",
+                  hintStyle: TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: Colors.black),
+                  prefixIcon: Icon(
+                    Icons.attach_money_outlined,
+                    color: Colors.black,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+              ),
+            ],
+          ),
+    );
+  }
+
+  TextEditingController amountController = TextEditingController();
+  TextEditingController paidamountController = TextEditingController();
 }

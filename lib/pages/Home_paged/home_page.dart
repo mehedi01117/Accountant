@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:accountant/pages/Home_paged/user_pages.dart';
+import 'package:accountant/pages/data/customer.dart';
 import 'package:accountant/pages/data/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -182,24 +183,18 @@ class _HomePageState extends State<HomePage> {
       body: ValueListenableBuilder(
         valueListenable: box.listenable(),
         builder: (context, Box<Transaction> box, _) {
+          final Box<Customer> customerBox = Hive.box<Customer>('customer_box');
           double totalIn = 0;
           double totalOut = 0;
-          for (var item in box.values) {
-            double blance = item.amount - item.paidamount;
-            if (item.isCradit) {
-              if (blance >= 0) {
-                totalIn += blance;
-              } else {
-                totalOut += blance.abs();
-              }
-            } else {
-              if (blance >= 0) {
-                totalIn += blance;
-              } else {
-                totalOut += blance.abs();
-              }
+          for (var customer in customerBox.values) {
+            var balance = customer.amounta - customer.paidamount;
+            if (balance > 0) {
+              totalIn += balance;
+            } else if (balance < 0) {
+              totalOut += balance.abs();
             }
           }
+          double netBalance = totalIn - totalOut;
 
           final transactions = box.values.toList().reversed.toList();
 
@@ -220,13 +215,13 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       summaryCard(
                         "মোট দেবো",
-                        "৳ ${totalOut.toStringAsFixed(0)}",
+                        "৳ ${netBalance > 0 ? 0 : netBalance.abs().toStringAsFixed(0)}",
                         Colors.black,
                       ),
                       SizedBox(width: 5),
                       summaryCard(
                         "মোট পাবো",
-                        "৳ ${totalIn.toStringAsFixed(0)}",
+                        "৳ ${netBalance < 0 ? 0 : netBalance.abs().toStringAsFixed(0)}",
                         Colors.red,
                       ),
                     ],

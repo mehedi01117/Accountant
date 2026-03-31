@@ -161,9 +161,23 @@ class _UserPagesState extends State<UserPages> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       summarycard(
-                        totaltaka >= 0 ? "মোট পাবো" : "মোট পাবে",
+                        "মোট লেনদেন",
+                        totaldibo.toString(),
+                        Colors.black,
+                      ),
+                      summarycard(
+                        "মোট দিয়েছে",
+                        totalpabo.toString(),
+                        Colors.black,
+                      ),
+                      summarycard(
+                        totaltaka == 0
+                            ? "সমান"
+                            : (totaltaka > 0 ? "মোট পাবো" : "মোট পাবে"),
                         totaltaka.abs().toString(),
-                        totaltaka >= 0 ? Colors.red : Colors.black,
+                        totaltaka == 0
+                            ? Colors.black
+                            : (totaltaka > 0 ? Colors.red : Colors.black),
                       ),
                     ],
                   ),
@@ -189,10 +203,10 @@ class _UserPagesState extends State<UserPages> {
                                 ),
                                 child: ListTile(
                                   title: Text(
-                                    customerTransactions[index].title,
+                                    "পণ্যের নাম ${alldata.productname}",
                                   ),
                                   subtitle: Text(
-                                    customerTransactions[index].date.toString(),
+                                    "${alldata.date.day}/${alldata.date.month}/${alldata.date.year}",
                                   ),
                                   trailing: Column(
                                     children: [
@@ -257,7 +271,6 @@ class _UserPagesState extends State<UserPages> {
                         return customer?.title == data.title;
                       }).toList();
 
-                   
                   if (keysToDelete.isNotEmpty) {
                     await box.deleteAll(keysToDelete);
                   }

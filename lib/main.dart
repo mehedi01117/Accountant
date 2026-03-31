@@ -15,7 +15,7 @@ void main() async {
   
   await Hive.openBox<Transaction>('tally_box');
   await Hive.openBox<Customer>('customer_box');
-  
+
   runApp(const MyApp());
 }
 

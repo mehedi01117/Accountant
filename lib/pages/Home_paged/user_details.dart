@@ -24,6 +24,9 @@ class _UserDetailsState extends State<UserDetails> {
     final data = widget.transaction;
     final data2 = widget.transaction2;
     final isCredite = data.isCradit;
+    final isCredite2 = data2.isCradit;
+
+    double balance = data2.amounta - data2.paidamount;
 
     return Scaffold(
       appBar: AppBar(
@@ -60,6 +63,73 @@ class _UserDetailsState extends State<UserDetails> {
             ),
           ],
         ),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              data.title,
+
+              style: TextStyle(color: Colors.black, fontSize: 16),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Table(
+              textDirection: TextDirection.ltr,
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+              border: TableBorder.all(width: 1, color: Colors.black),
+              children: [
+                TableRow(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          "প্যণের নাম",
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text("নোট", style: TextStyle(fontSize: 10)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text("মোট টাকা", style: TextStyle(fontSize: 10)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          "টাকা দিয়েছেন",
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          balance == 0
+                              ? "পরিশোধ 0.0"
+                              : (balance > 0 ? "মোট পাবো " : "মোট পাবে "),
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

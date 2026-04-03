@@ -338,12 +338,13 @@ class _HomePageState extends State<HomePage> {
 
                                         Column(
                                           children: [
+                                            
                                             Text(
                                               customerBalance == 0
                                                   ? "সমান"
                                                   : (customerBalance > 0
-                                                      ? "মোট পাবে"
-                                                      : "মোট পাবো"),
+                                                      ? "মোট পাবো "
+                                                      : "মোট পাবে"),
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 color:

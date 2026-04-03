@@ -123,7 +123,7 @@ class _UserPagesState extends State<UserPages> {
             ),
             SizedBox(width: 10),
             Text(
-              " ${data.title}  বিবরণ",
+              " ${data.title}",
               style: const TextStyle(color: Colors.black, fontSize: 16),
             ),
           ],
@@ -211,7 +211,12 @@ class _UserPagesState extends State<UserPages> {
                               double balancea = balance.abs();
                               return GestureDetector(
                                 onTap: () {
-                                  Get.offAll(() => UserDetails(transaction: data, transaction2: alldata));
+                                  Get.offAll(
+                                    () => UserDetails(
+                                      transaction: data,
+                                      transaction2: alldata,
+                                    ),
+                                  );
                                 },
                                 child: Card(
                                   margin: EdgeInsets.symmetric(
